@@ -5,33 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meine Website</title>
   <style>
-    /* CSS hier */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #E0E0E0;
+    }
+
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    #logo-container {
+      width: 12vw;
+      height: 12vw;
+      min-width: 80px;
+      max-width: 200px;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">Über uns</a>
-      <a href="#">Kontakt</a>
-    </nav>
+    <div id="logo-container"></div>
   </header>
 
-  <main>
-    <section>
-      <h1>Willkommen</h1>
-      <h2>blabldajfab</h2>
-      <p>Hier kommt dein Inhalt.</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2026 Meine Website</p>
-  </footer>
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Logo Viewer -->
+  <script src="logo-viewer.js"></script>
 
   <script>
-    // JavaScript hier
+    new LogoViewer(document.getElementById("logo-container"), {
+      stlUrl:        "https://raw.githubusercontent.com/philippetoulabor-ux/vibecodetest1/main/web/logo_web/logo_web.stl",
+      href:          "/",
+      rimColor:      "#FFF4E0",
+      rimIntensity:  0.28,
+      paddingTop:    0,
+      paddingBottom: 0,
+    })
   </script>
 
 </body>
