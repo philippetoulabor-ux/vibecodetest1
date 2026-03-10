@@ -12,22 +12,33 @@
     }
 
     body {
-      background: #E0E0E0;
+      background: #ffffff;
     }
 
     header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2vw;
+}
 
     #logo-container {
       width: 12vw;
       height: 12vw;
       min-width: 80px;
-      max-width: 200px;
+      max-width: 300px;
       flex-shrink: 0;
+    }
+
+    #grid-container {
+      width: 100%;
+    }
+
+    /* Handy: eine Spalte */
+    @media (max-width: 768px) {
+      .project-grid {
+        grid-template-columns: 1fr !important;
+      }
     }
   </style>
 </head>
@@ -37,12 +48,19 @@
     <div id="logo-container"></div>
   </header>
 
+  <main>
+    <div id="grid-container"></div>
+  </main>
+
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <!-- Logo Viewer -->
   <script src="logo-viewer.js"></script>
+  <!-- Project Grid -->
+  <script src="project-grid.js"></script>
 
   <script>
+    // Logo
     new LogoViewer(document.getElementById("logo-container"), {
       stlUrl:        "https://raw.githubusercontent.com/philippetoulabor-ux/vibecodetest1/main/web/logo_web/logo_web.stl",
       href:          "/",
@@ -50,6 +68,31 @@
       rimIntensity:  0.28,
       paddingTop:    0,
       paddingBottom: 0,
+    })
+
+    // Projekt Grid
+    new ProjectGrid(document.getElementById("grid-container"), {
+      projects: [
+        { name: "step_spun", category: "LIGHTING",  preview: "https://raw.githubusercontent.com/philippetoulabor-ux/vibecodetest1/main/web/step_web/IMG_9586.jpg", href: "/projekt-a" },
+        { name: "Projekt B", category: "Editorial", preview: "/videos/b.mp4", href: "/projekt-b" },
+        { name: "Projekt C", category: "UX / Web",  preview: "/videos/c.mp4", href: "/projekt-c" },
+        { name: "Projekt D", category: "Foto",      preview: "/videos/d.mp4", href: "/projekt-d" },
+        { name: "step_spun", category: "LIGHTING",  preview: "https://raw.githubusercontent.com/philippetoulabor-ux/vibecodetest1/main/web/step_web/IMG_9586.jpg", href: "/projekt-a" },
+        { name: "Projekt B", category: "Editorial", preview: "/videos/b.mp4", href: "/projekt-b" },
+        { name: "Projekt C", category: "UX / Web",  preview: "/videos/c.mp4", href: "/projekt-c" },
+        { name: "Projekt D", category: "Foto",      preview: "/videos/d.mp4", href: "/projekt-d" },
+      ],
+      columns:              3,
+      fontFamily:           "sans-serif",
+      fontSize:             36,
+      textColor:            "#1a1814",
+      hoverTextColor:       "#c8401a",
+      categoryColor:        "#9e9a92",
+      categoryFontFamily:   "sans-serif",
+      backgroundColor:      "transparent",
+      hoverBackgroundColor: "rgba(0,0,0,0.04)",
+      cellHeight:           300,
+      previewHeight:        500,
     })
   </script>
 
