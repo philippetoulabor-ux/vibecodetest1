@@ -39,13 +39,24 @@ function buildEnvMap(renderer, scene) {
   scene.environment = env
 }
 
-function centerAndScaleModel(group) {
+const CAMERA_FOV = 40
+
+/**
+ * Zentriert und skaliert das Modell so, dass es bei beliebiger Rotation
+ * garantiert im Viewport bleibt. cameraDistance: kleiner = Modell wirkt größer.
+ */
+function centerAndScaleModel(group, aspectRatio, cameraDistance, sizeMultiplier = 1) {
   const box = new THREE.Box3().setFromObject(group)
   const center = box.getCenter(new THREE.Vector3())
   group.position.sub(center)
   const size = box.getSize(new THREE.Vector3())
-  const maxDim = Math.max(size.x, size.y, size.z)
-  const scale = 1.6 / maxDim
+  const diagonal = Math.sqrt(size.x * size.x + size.y * size.y + size.z * size.z)
+
+  const halfFov = (CAMERA_FOV * Math.PI) / 360
+  const visibleAtOrigin = cameraDistance * Math.tan(halfFov)
+  const limit = Math.min(1, aspectRatio) * visibleAtOrigin * 0.97
+  const safeMultiplier = Math.min(1, Math.max(0.5, sizeMultiplier))
+  const scale = (2 * limit * safeMultiplier) / diagonal
   group.scale.setScalar(scale)
   return group
 }
@@ -55,6 +66,10 @@ export default function SpinModelViewer({
   rimColor = "#FFF4E0",
   rimIntensity = 0.28,
   className = "",
+  /** Modellgröße 0.5–1 (Standard 1). 1 = max. ohne Abschneiden, kleiner = mehr Rand. */
+  modelScale = 1,
+  /** Kamera-Abstand (Standard 3.5). Kleiner = Modell wirkt größer (z. B. 2.8), größer = kleiner. */
+  cameraDistance = 1,
 }) {
   const containerRef = useRef(null)
   const [loadState, setLoadState] = useState({ status: "loading", progress: 0 })
@@ -186,8 +201,8 @@ export default function SpinModelViewer({
       wrapper.appendChild(canvas)
 
       scene = new THREE.Scene()
-      camera = new THREE.PerspectiveCamera(35, w / h, 0.001, 100)
-      camera.position.set(0, 0, 3.5)
+      camera = new THREE.PerspectiveCamera(CAMERA_FOV, w / h, 0.001, 100)
+      camera.position.set(0, 0, cameraDistance)
 
       applyLights(scene, rimColor, rimIntensity)
       buildEnvMap(renderer, scene)
@@ -209,7 +224,7 @@ export default function SpinModelViewer({
 
         modelGroup = new THREE.Group()
         if (gltf.scene) modelGroup.add(gltf.scene)
-        modelGroup = centerAndScaleModel(modelGroup)
+        modelGroup = centerAndScaleModel(modelGroup, w / h, cameraDistance, modelScale)
         scene.add(modelGroup)
 
         rotX = 0
@@ -244,7 +259,7 @@ export default function SpinModelViewer({
       }
       if (wrapper.parentNode) wrapper.parentNode.removeChild(wrapper)
     }
-  }, [modelUrl, rimColor, rimIntensity])
+  }, [modelUrl, rimColor, rimIntensity, modelScale, cameraDistance])
 
   return (
     <div

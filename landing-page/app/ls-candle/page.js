@@ -30,11 +30,16 @@ export default function LsCandlePage() {
         <LogoViewer config={{ ...logoConfig, followMouse: false }} />
       </header>
       <main className="project-page-main">
-        <SpinModelViewer
-          modelUrl="/web/kerze_web/candle.glb"
-          rimColor="#FFF4E0"
-          rimIntensity={0.28}
-        />
+        <div className="model-viewer-frame">
+          <SpinModelViewer
+            className="model-viewer-in-frame"
+            modelUrl="/web/kerze_web/candle.glb"
+            rimColor="#FFF4E0"
+            rimIntensity={0.28}
+            modelScale={1}
+            cameraDistance={2.9}
+          />
+        </div>
       </main>
     </div>
   )

@@ -27,10 +27,10 @@ export const gridProjects = [
       href: "/projekt-b",
     },
     {
-      name: "contact/about",
+      name: "contact",
       category: "",
       preview: "",
-      href: "/projekt-b",
+      href: "/contact",
     },
     {
       name: "step_drawn",
@@ -41,7 +41,7 @@ export const gridProjects = [
     {
       name: "clay",
       category: "CERAMICS",
-      preview: "/web/step_web/IMG_9586.jpg",
+      preview: "/web/clay_web/DSCF5185.png?v=2",
       href: "/projekt-d",
     },
     {
@@ -50,6 +50,12 @@ export const gridProjects = [
       preview:
         "/web/step_web/IMG_9586.jpg",
       href: "/ls-candle",
+    },
+    {
+      name: "LSradio",
+      category: "ENTERTAINMENT SYSTEM",
+      preview: "/web/LSradio_web/DSCF9166.jpg",
+      href: "/ls-radio",
     },
     {
       name: "stamping",

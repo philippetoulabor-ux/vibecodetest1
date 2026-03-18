@@ -34,6 +34,143 @@ header {
   max-width: 200px;
 }
 
+/* Contact-Seite: gleiche Logo-Größe wie ls-candle */
+.page-contact #logo-container,
+.page-contact .logo-placeholder {
+  width: 8vw;
+  height: 8vw;
+  min-width: 56px;
+  max-width: 200px;
+}
+
+/* Contact-Formular: minimalistisch, wie Bild */
+.page-contact .contact-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2vw;
+}
+
+.page-contact .contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.page-contact .contact-field {
+  width: 100%;
+}
+
+.page-contact .contact-textarea,
+.page-contact .contact-input {
+  width: 100%;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid #000;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: #000;
+  resize: vertical;
+  outline: none;
+}
+
+.page-contact .contact-textarea:focus,
+.page-contact .contact-input:focus {
+  box-shadow: 0 0 0 1px #000;
+}
+
+.page-contact .contact-textarea::placeholder,
+.page-contact .contact-input::placeholder {
+  color: #9e9e9e;
+}
+
+.page-contact .contact-textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+.page-contact .contact-attach-row {
+  margin-top: 8px;
+}
+
+.page-contact .contact-attach-label {
+  font-family: sans-serif;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.page-contact .contact-file-input {
+  display: none;
+}
+
+.page-contact .contact-file-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.page-contact .contact-file-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.05);
+  font-size: 11px;
+  border-radius: 2px;
+}
+
+.page-contact .contact-file-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 2px;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.page-contact .contact-send {
+  padding: 10px 28px;
+  background: #fff;
+  border: none;
+  border-radius: 999px;
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #000;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.page-contact .contact-send:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.page-contact .contact-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-contact .contact-status {
+  font-family: sans-serif;
+  font-size: 13px;
+}
+
+.page-contact .contact-status-success {
+  color: #1a5c1a;
+}
+
+.page-contact .contact-status-error {
+  color: #a00;
+}
+
 #grid-container {
   width: 100%;
 }
@@ -46,10 +183,31 @@ header {
   min-height: 60vh;
 }
 
+/* ls-candle: Container passt sich dem hohen Modell an, keine breite Box */
+.page-ls-candle .model-viewer-frame {
+  display: flex;
+  aspect-ratio: 3 / 4;
+  width: 100%;
+  max-width: 420px;
+  min-height: 0;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.page-ls-candle .project-page-main {
+  overflow: visible;
+}
+
+.page-ls-candle .model-viewer-in-frame {
+  flex: 1;
+  min-width: 0;
+  min-height: 0 !important; /* überschreibt inline minHeight, damit der Frame das Layout bestimmt */
+}
+
 .model-viewer-placeholder {
   width: 100%;
   min-height: 400px;
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(0, 0, 0, 0);
   border-radius: 4px;
 }
 
@@ -147,13 +305,11 @@ header {
   position: fixed;
   pointer-events: none;
   z-index: 9999;
-  border-radius: 2px;
   overflow: hidden;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
   display: none;
   width: 300px;
   height: var(--pg-preview-height);
-  background: #fff;
+  background: transparent;
 }
 
 .pg-preview-img,
