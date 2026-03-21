@@ -285,7 +285,8 @@ header {
   aspect-ratio: 3 / 4;
   flex: 0 1 708px;
   max-width: min(708px, 91vw);
-  min-width: 0;
+  /* sonst kann Flex den Frame auf 0 schrumpfen → kein sichtbarer 3D-Viewport */
+  min-width: min(240px, 42vw);
   min-height: 0;
   overflow: visible;
   /* nach rechts und oben */

@@ -1,14 +1,19 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+function getResend() {
+  const key = process.env.RESEND_API_KEY
+  if (!key) return null
+  return new Resend(key)
+}
 
 const FROM_EMAIL = process.env.CONTACT_FROM || 'onboarding@resend.dev'
 const TO_EMAIL = process.env.CONTACT_TO || process.env.RESEND_TO_EMAIL
 
 export async function POST(request) {
   try {
-    if (!process.env.RESEND_API_KEY) {
+    const resend = getResend()
+    if (!resend) {
       return NextResponse.json(
         { error: 'E-Mail-Service nicht konfiguriert (RESEND_API_KEY fehlt)' },
         { status: 500 }

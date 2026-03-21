@@ -163,10 +163,22 @@ export default function SpinModelViewer({
 
     const waitForSize = () =>
       new Promise((resolve) => {
+        let attempts = 0
+        const maxAttempts = 180
         const check = () => {
           if (disposed) return
-          if (container.offsetWidth > 0 && container.offsetHeight > 0) resolve()
-          else raf = requestAnimationFrame(check)
+          const w = container.offsetWidth
+          const h = container.offsetHeight
+          if (w > 0 && h > 0) {
+            resolve()
+            return
+          }
+          attempts++
+          if (attempts >= maxAttempts) {
+            resolve()
+            return
+          }
+          raf = requestAnimationFrame(check)
         }
         check()
       })
@@ -175,8 +187,12 @@ export default function SpinModelViewer({
       await waitForSize()
       if (disposed) return
 
-      const w = container.offsetWidth
-      const h = container.offsetHeight
+      let w = container.offsetWidth
+      let h = container.offsetHeight
+      if (!w || !h) {
+        w = Math.max(w, 320)
+        h = Math.max(h, 400)
+      }
 
       // Modell-Download und Setup parallel starten
       const modelPromise = new Promise((resolve, reject) => {
