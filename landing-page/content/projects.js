@@ -26,7 +26,7 @@ export const projects = [
   },
   {
     slug: "projekt-b",
-    name: "mm-series",
+    name: "middlemen",
     category: "FURNITURE",
     preview:
       "/web/mm-series/WhatsApp%20Image%202025-02-17%20at%2019.34.23%20Kopie.jpeg",
